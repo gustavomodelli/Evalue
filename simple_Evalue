@@ -1,0 +1,29 @@
+library(tidyverse)
+library(gtsummary)
+library(finalfit)
+library(EValue)
+
+## Example with Evalue
+
+data("lead")
+lead %>% str()
+
+lead <- lead %>% 
+  mutate(lead = factor(lead))
+
+## Evaluate Evalue with OR
+
+model1 <- glm(lead ~ age + male + smoking + income , data = lead, family = 'binomial')
+summary(model1)
+
+theme_gtsummary_journal(journal = c('jama'))
+
+model1 %>% 
+  tbl_regression(exp = TRUE)
+
+## Univariate Lead smoking and outcome
+
+evalues.OR(2.51, lo = 1.66, hi = 3.8, rare = 1)
+
+
+## Multiple Bias
